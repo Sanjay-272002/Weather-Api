@@ -27,7 +27,7 @@ locationBtn.addEventListener("click", ()=>{
 function onsuccess(position){
     const{latitude, longitude} =position.coords;//getting latitude and longitude from coords
      api=`https://api.openweathermap.org/data/2.5/weather?lat=${latitude}&lon=${longitude}&units=metric&appid=331402349d907a2dd1e4c0e720d73044`;
-     countryL.innerHTML=latitude+'N'+longitude+'E'
+
     fetchData();
 
 }
@@ -59,6 +59,8 @@ function weatherDetails(info){
         const country=info.sys.country;
         const {description, id}=info.weather[0];
         const{feels_like,humidity,temp}=info.main;
+        const lati=info.coord.lat;
+        const longi=info.coord.lon;
        if(id==800){
           wIcon.src= "icons/clear.svg";
        }else if(id>=200 && id<=232){
@@ -73,6 +75,7 @@ function weatherDetails(info){
         wIcon.src= "icons/rain.svg";
      }
         //passing values into a html element
+      
         wrapper.querySelector(".temp .numb").innerHTML=Math.floor(temp);
         wrapper.querySelector(".weather").innerHTML=description;
         wrapper.querySelector(".location span").innerHTML=`${city} , ${country}`;
@@ -80,6 +83,7 @@ function weatherDetails(info){
         wrapper.querySelector(".humidity span").innerHTML=`${humidity}%`;
         infoTxt.classList.remove("pending","error");
         wrapper.classList.add("active");
+        countryL.innerHTML=lati+'N'+longi+'E'
     }
     console.log(info);
 }
@@ -87,6 +91,9 @@ function weatherDetails(info){
 arrowBack.addEventListener("click",()=>{
 
     wrapper.classList.remove("active");
+    countryL.innerHTML="IN";
+
+   
 })
 
 //timezone 
